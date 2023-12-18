@@ -1,4 +1,4 @@
-import { Pagination } from "@mui/material";
+import { Pagination, Stack } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { ChangeEvent, FC, useEffect, useState } from "react";
@@ -31,10 +31,12 @@ const ProductList: FC = () => {
   }
 
   return (
-    <>
-      <ProductCards products={products} />
-      {pageCount && <Pagination onChange={handleCurrentPageChange} page={currentPage} count={pageCount} size="large" />}
-    </>
+    <section className="product-list">
+      <Stack alignItems="center" spacing="50px">
+        <ProductCards products={products} />
+        {pageCount && <Pagination onChange={handleCurrentPageChange} page={currentPage} count={pageCount} size="large" />}
+      </Stack>
+    </section>
   );
 }
 
