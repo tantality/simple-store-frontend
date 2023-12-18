@@ -26,14 +26,10 @@ const ProductList: FC = () => {
     }))
   }, [dispatch, currentPage])
 
-  if (isPending) {
-    <CenteredLoader />
-  }
-
   return (
     <section className="product-list">
       <Stack alignItems="center" spacing="50px">
-        <ProductCards products={products} />
+        {isPending.products ? <CenteredLoader /> : <ProductCards products={products} />}
         {pageCount && <Pagination onChange={handleCurrentPageChange} page={currentPage} count={pageCount} size="large" />}
       </Stack>
     </section>
