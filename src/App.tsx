@@ -1,9 +1,12 @@
 import React from 'react';
 import './app.scss';
+import ErrorBoundaryComp from './components/error-boundary.comp';
 
 function App() {
   return (
-    <div className="App" />
+    <ErrorBoundaryComp>
+      <div className="App" />
+    </ErrorBoundaryComp>
   );
 }
 
