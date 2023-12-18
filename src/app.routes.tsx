@@ -11,6 +11,7 @@ const PublicRoute: FC<{ element: any }> = ({ element: Element }) => (
 const AuthPage = React.lazy(() => import("app/auth"));
 const ProductsPage = React.lazy(() => import("app/products"));
 const OrdersPage = React.lazy(() => import("app/orders"));
+const CartPage = React.lazy(() => import("app/cart"));
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
       <Route path={"/auth/*"} element={<PublicRoute element={AuthPage} />} />
       <Route path={"/products/*"} element={<PublicRoute element={ProductsPage} />} />
       <Route path={"/orders/*"} element={<PublicRoute element={OrdersPage} />} />
+      <Route path={"/cart/*"} element={<PublicRoute element={CartPage} />} />
 
       <Route path='*' element={<Navigate to="/products" />} />
     </Routes>
