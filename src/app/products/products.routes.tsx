@@ -10,12 +10,12 @@ const Suspended: FC<PropsWithChildren & { element: any }> = ({ element: Element 
   );
 };
 
-const ProductList = React.lazy(() => import("app/products/product-list.page"));
+const ProductListPage = React.lazy(() => import("app/products/product-list.page"));
 
 const ProductsRoutes: FC = () => {
   return (
     <Routes>
-      <Route path={"/"} element={<Suspended element={ProductList} />} />
+      <Route path={"/"} element={<Suspended element={ProductListPage} />} />
 
       <Route path='*' element={<Navigate to="/products" />} />
     </Routes>
