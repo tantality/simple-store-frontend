@@ -10,12 +10,14 @@ const PublicRoute: FC<{ element: any }> = ({ element: Element }) => (
 
 const AuthPage = React.lazy(() => import("app/auth"));
 const ProductsPage = React.lazy(() => import("app/products"));
+const OrdersPage = React.lazy(() => import("app/orders"));
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path={"/auth/*"} element={<PublicRoute element={AuthPage} />} />
       <Route path={"/products/*"} element={<PublicRoute element={ProductsPage} />} />
+      <Route path={"/orders/*"} element={<PublicRoute element={OrdersPage} />} />
 
       <Route path='*' element={<Navigate to="/products" />} />
     </Routes>
