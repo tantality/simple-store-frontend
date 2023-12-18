@@ -1,6 +1,6 @@
 import CenteredLoader from "components/centered-loader.comp";
 import React, { FC, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 const PublicRoute: FC<{ element: any }> = ({ element: Element }) => (
   <Suspense fallback={<CenteredLoader />}>
@@ -9,11 +9,15 @@ const PublicRoute: FC<{ element: any }> = ({ element: Element }) => (
 );
 
 const AuthPage = React.lazy(() => import("app/auth"));
+const ProductsPage = React.lazy(() => import("app/products"));
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path={"/auth/*"} element={<PublicRoute element={AuthPage} />} />
+      <Route path={"/products/*"} element={<PublicRoute element={ProductsPage} />} />
+
+      <Route path='*' element={<Navigate to="/products" />} />
     </Routes>
   );
 };
