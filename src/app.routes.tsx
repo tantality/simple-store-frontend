@@ -1,5 +1,7 @@
+import { refreshTokens } from "app/auth/store/auth.actions";
 import CenteredLoader from "components/centered-loader.comp";
-import React, { FC, Suspense } from "react";
+import { useAppDispatch } from "hooks/redux.hooks";
+import React, { FC, Suspense, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const PublicRoute: FC<{ element: any }> = ({ element: Element }) => (
@@ -14,6 +16,14 @@ const OrdersPage = React.lazy(() => import("app/orders"));
 const CartPage = React.lazy(() => import("app/cart"));
 
 const AppRoutes = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("access-token")) {
+      dispatch(refreshTokens())
+    }
+  }, [dispatch])
+
   return (
     <Routes>
       <Route path={"/auth/*"} element={<PublicRoute element={AuthPage} />} />
