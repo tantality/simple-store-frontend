@@ -1,11 +1,14 @@
 import Header from "components/header.comp";
+import Layout from "components/layout.comp";
 import { FC } from "react";
 
 const OrderView: FC = () => {
   return (
     <>
       <Header />
-      <div>Cart</div>
+      <Layout>
+        <div>Cart</div>
+      </Layout>
     </>
   )
 }

@@ -1,11 +1,12 @@
-import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import Layout from "./layout.comp";
 
 const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color={'default'}>
-        <Container sx={{ px: "48px", py: "24px" }} maxWidth={'xl'}>
+        <Layout sx={{ py: "24px" }}>
           <Toolbar sx={{ columnGap: '20px', flexWrap: "wrap", rowGap: '20px' }}>
             <Typography variant="h1" component="div" sx={{ flexGrow: 1 }} fontSize={'1.5rem'} fontWeight={600}>
               Shop
@@ -21,7 +22,7 @@ const Header = () => {
             </NavLink>
             <Button color="inherit" variant="outlined">Login</Button>
           </Toolbar>
-        </Container>
+        </Layout>
       </AppBar>
     </Box >
   )
