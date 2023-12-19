@@ -2,23 +2,36 @@ import { Button, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import Layout from "components/layout.comp";
 import { FC } from "react";
-import { Link } from "react-router-dom";
-import { Controller, useForm, } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { Controller, FieldValues, SubmitHandler, useForm, } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { checkPasswordAndEmailSchema } from "./validation-schemas/check-password-and-email.schema";
+import { useAppDispatch } from "hooks/redux.hooks";
+import { signIn } from "./store/auth.actions";
 
-const SignIn: FC = () => {
-  const { control, formState: { errors } } = useForm({
+const SignInPage: FC = () => {
+  const { control, getValues, handleSubmit, formState: { errors } } = useForm({
     mode: 'all',
     resolver: yupResolver(checkPasswordAndEmailSchema),
     defaultValues: { email: '', password: '' }
   });
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleFormSubmit: SubmitHandler<FieldValues> = async () => {
+    const formState = getValues();
+    await dispatch(signIn({ body: formState })).then((data) => {
+      if (data.meta.requestStatus !== 'rejected') {
+        navigate('/products/')
+      }
+    })
+  };
 
   return (
     <Layout sx={{ height: '99vh' }}>
       <Stack alignItems={'center'} width={'100%'} justifyContent={'center'} height={'100%'} rowGap={'32px'}>
-        <form className="sign-in-form" style={{ maxWidth: '450px', width: '100% ' }}>
+        <form className="sign-in-form" style={{ maxWidth: '450px', width: '100% ' }} onSubmit={handleSubmit(handleFormSubmit)}>
           <Stack alignItems={'flex-start'} rowGap="32px">
             <Typography variant="h1" fontSize={'1.5rem'} fontWeight={600}>Sign In</Typography>
             <div className="sign-in-form__inputs" style={{ width: '100% ' }}>
@@ -37,7 +50,7 @@ const SignIn: FC = () => {
                 />
               </Stack>
             </div>
-            <Button fullWidth={true} variant="contained" type="submit">Create an account</Button>
+            <Button fullWidth={true} variant="contained" type="submit" onSubmit={handleFormSubmit}>Create an account</Button>
           </Stack>
           <input type="text" autoComplete="on" value="" style={{ display: 'none', opacity: 0, position: 'absolute', left: '-100000px' }} readOnly={true} />
         </form>
@@ -52,4 +65,4 @@ const SignIn: FC = () => {
   );
 };
 
-export default SignIn;
+export default SignInPage;
