@@ -1,8 +1,20 @@
 import { refreshTokens } from "app/auth/store/auth.actions";
+import { authSelector } from "app/auth/store/auth.selectors";
 import CenteredLoader from "components/centered-loader.comp";
-import { useAppDispatch } from "hooks/redux.hooks";
+import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import React, { FC, Suspense, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+
+const PrivateRoute: FC<{ element: any }> = ({ element: Element }) => {
+  const { isAuth } = useAppSelector(authSelector);
+  return isAuth ? (
+    <Suspense fallback={<CenteredLoader />}>
+      <Element />
+    </Suspense>
+  ) : (
+    <Navigate to={"/auth/login/"} replace />
+  );
+};
 
 const PublicRoute: FC<{ element: any }> = ({ element: Element }) => (
   <Suspense fallback={<CenteredLoader />}>
@@ -28,8 +40,8 @@ const AppRoutes = () => {
     <Routes>
       <Route path={"/auth/*"} element={<PublicRoute element={AuthPage} />} />
       <Route path={"/products/*"} element={<PublicRoute element={ProductsPage} />} />
-      <Route path={"/orders/*"} element={<PublicRoute element={OrdersPage} />} />
-      <Route path={"/cart/*"} element={<PublicRoute element={CartPage} />} />
+      <Route path={"/orders/*"} element={<PrivateRoute element={OrdersPage} />} />
+      <Route path={"/cart/*"} element={<PrivateRoute element={CartPage} />} />
 
       <Route path='*' element={<Navigate to="/products" />} />
     </Routes>
