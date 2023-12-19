@@ -1,7 +1,13 @@
+import Header from "components/header.comp";
 import { FC } from "react";
 
 const OrderView: FC = () => {
-  return <div>Cart</div>
+  return (
+    <>
+      <Header />
+      <div>Cart</div>
+    </>
+  )
 }
 
 export default OrderView;

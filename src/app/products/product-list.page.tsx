@@ -1,12 +1,16 @@
 import { Container } from "@mui/system";
+import Header from "components/header.comp";
 import { FC } from "react";
 import ProductList from "./components/product-list.comp";
 
 const ProductListPage: FC = () => {
   return (
-    <Container sx={{ px: "32px", py: "48px" }}>
-      <ProductList />
-    </Container>
+    <>
+      <Header />
+      <Container sx={{ px: "48px", py: "32px" }} maxWidth={'xl'}>
+        <ProductList />
+      </Container>
+    </>
   );
 }
 
