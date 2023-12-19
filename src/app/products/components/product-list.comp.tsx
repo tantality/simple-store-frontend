@@ -26,7 +26,7 @@ const ProductList: FC = () => {
     }))
   }, [dispatch, currentPage])
 
-  if (!products.length) {
+  if (!products.length && !isPending) {
     return <NoProducts />
   }
 
