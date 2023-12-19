@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosAuthClient, axiosClient } from "api/axios.client";
+import { axiosAuthClient } from "api/axios.client";
 import { AuthDto } from "../types/auth.dto";
 import { SignUpForm } from "../types/signup.form";
 import { SignInForm } from "../types/signin.form";
