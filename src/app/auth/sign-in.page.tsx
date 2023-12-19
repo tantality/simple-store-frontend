@@ -50,7 +50,7 @@ const SignInPage: FC = () => {
                 />
               </Stack>
             </div>
-            <Button fullWidth={true} variant="contained" type="submit" onSubmit={handleFormSubmit}>Create an account</Button>
+            <Button fullWidth={true} variant="contained" type="submit" onSubmit={handleFormSubmit}>Sign in</Button>
           </Stack>
           <input type="text" autoComplete="on" value="" style={{ display: 'none', opacity: 0, position: 'absolute', left: '-100000px' }} readOnly={true} />
         </form>
