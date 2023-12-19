@@ -44,7 +44,7 @@ export const authSlice = createSlice({
         state.isPending.isAuth = false;
         state.errors.isAuth = action.payload.message;
       })
-      // Sign In
+      // Refresh Tokens
       .addCase(refreshTokens.pending, (state) => {
         state.isPending.isAuth = true;
         state.errors.isAuth = null;
