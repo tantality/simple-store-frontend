@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { getAllProducts } from "../store/products.actions";
 import { productsSelector } from "../store/products.selectors";
+import NoProducts from "./no-products.comp";
 import ProductCards from "./product-cards.comp";
-
 
 const ProductList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -25,6 +25,10 @@ const ProductList: FC = () => {
       }
     }))
   }, [dispatch, currentPage])
+
+  if (!products.length) {
+    return <NoProducts />
+  }
 
   return (
     <section className="product-list">
