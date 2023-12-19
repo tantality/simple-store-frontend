@@ -29,10 +29,9 @@ export const signIn = createAsyncThunk<AuthDto, { body: SignInForm }>("POST/sign
 export const signOut = createAsyncThunk<AuthDto>("GET/signout", async (_, { rejectWithValue }) => {
   try {
     const response = await axiosAuthClient.get<AuthDto>("/auth/signout");
-    localStorage.setItem("access-token", response.data.accessToken);
+    localStorage.removeItem("access-token");
     return response.data;
   } catch (error: any) {
-    localStorage.removeItem("access-token");
     return rejectWithValue(error);
   }
 });
