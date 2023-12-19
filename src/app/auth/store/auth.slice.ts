@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "../types/auth.state";
-import { RefreshTokens, SignIn, SignUp } from "./auth.actions";
+import { refreshTokens, signIn, signUp } from "./auth.actions";
 
 const initialState: AuthState = {
   isAuth: false,
@@ -19,41 +19,41 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Sign Up
-      .addCase(SignUp.pending, (state) => {
+      .addCase(signUp.pending, (state) => {
         state.isPending.isAuth = true;
         state.errors.isAuth = null;
       })
-      .addCase(SignUp.fulfilled, (state) => {
+      .addCase(signUp.fulfilled, (state) => {
         state.isPending.isAuth = false;
         state.isAuth = true;
       })
-      .addCase(SignUp.rejected, (state, action: any & { payload: any }) => {
+      .addCase(signUp.rejected, (state, action: any & { payload: any }) => {
         state.isPending.isAuth = false;
         state.errors.isAuth = action.payload.message;
       })
       // Sign In
-      .addCase(SignIn.pending, (state) => {
+      .addCase(signIn.pending, (state) => {
         state.isPending.isAuth = true;
         state.errors.isAuth = null;
       })
-      .addCase(SignIn.fulfilled, (state) => {
+      .addCase(signIn.fulfilled, (state) => {
         state.isPending.isAuth = false;
         state.isAuth = true;
       })
-      .addCase(SignIn.rejected, (state, action: any & { payload: any }) => {
+      .addCase(signIn.rejected, (state, action: any & { payload: any }) => {
         state.isPending.isAuth = false;
         state.errors.isAuth = action.payload.message;
       })
       // Sign In
-      .addCase(RefreshTokens.pending, (state) => {
+      .addCase(refreshTokens.pending, (state) => {
         state.isPending.isAuth = true;
         state.errors.isAuth = null;
       })
-      .addCase(RefreshTokens.fulfilled, (state) => {
+      .addCase(refreshTokens.fulfilled, (state) => {
         state.isPending.isAuth = false;
         state.isAuth = true;
       })
-      .addCase(RefreshTokens.rejected, (state, action: any & { payload: any }) => {
+      .addCase(refreshTokens.rejected, (state, action: any & { payload: any }) => {
         state.isPending.isAuth = false;
         state.errors.isAuth = action.payload.message;
       });
