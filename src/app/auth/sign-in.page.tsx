@@ -1,8 +1,11 @@
+import Layout from "components/layout.comp";
 import { FC } from "react";
 
 const SignIn: FC = () => {
   return (
-    <div>Sign in</div>
+    <Layout>
+      <div>Sign in</div>
+    </Layout>
   );
 };
 
