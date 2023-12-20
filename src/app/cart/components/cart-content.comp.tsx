@@ -1,6 +1,5 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
-import TableRowsLoader from "components/table-rows-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { FC, useEffect } from "react";
 import { getCart } from "../store/cart.actions";
@@ -40,26 +39,22 @@ const CartContent: FC = () => {
           </TableHead>
           <TableBody>
             {
-              cart && isPending.cart ?
-                <TableRowsLoader rowsCount={20} cellsCount={5} />
-                :
-                cart.items.map((cartItem) => (
-                  <TableRow
-                    key={cartItem.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell align="right">
-                      <img src={cartItem.product.img} alt={cartItem.product.name} width="80px" height="80px" style={{ objectFit: 'cover' }}></img>
-                    </TableCell>
-                    <TableCell align="right">{cartItem.product.name}</TableCell>
-                    <TableCell align="right">{cartItem.price}</TableCell>
-                    <TableCell align="right">{cartItem.quantity}</TableCell>
-                    <TableCell align="right">
-                      <DeleteCartItemButton cart={{ itemsLength: cart.items.length, id: cart.id }} itemId={cartItem.id} />
-                    </TableCell>
-                  </TableRow>
-                ))
-
+              cart.items.map((cartItem) => (
+                <TableRow
+                  key={cartItem.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell align="right">
+                    <img src={cartItem.product.img} alt={cartItem.product.name} width="80px" height="80px" style={{ objectFit: 'cover' }}></img>
+                  </TableCell>
+                  <TableCell align="right">{cartItem.product.name}</TableCell>
+                  <TableCell align="right">{cartItem.price}</TableCell>
+                  <TableCell align="right">{cartItem.quantity}</TableCell>
+                  <TableCell align="right">
+                    <DeleteCartItemButton cart={{ itemsLength: cart.items.length, id: cart.id }} itemId={cartItem.id} />
+                  </TableCell>
+                </TableRow>
+              ))
             }
           </TableBody>
         </Table>
