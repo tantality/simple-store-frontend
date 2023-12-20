@@ -6,6 +6,7 @@ import { getCart } from "../store/cart.actions";
 import { cartSelector } from "../store/cart.selectors";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 import EmptyCart from "./empty-cart.comp";
+import TableRowsLoader from "./table-rows-loader.comp";
 
 const CartContent: FC = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,9 @@ const CartContent: FC = () => {
           </TableHead>
           <TableBody>
             {
-              cart && isPending.cart ? <CenteredLoader /> :
+              cart && isPending.cart ?
+                <TableRowsLoader rowsNum={20} />
+                :
                 cart.items.map((cartItem) => (
                   <TableRow
                     key={cartItem.id}
