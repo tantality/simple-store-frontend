@@ -2,7 +2,7 @@ import Header from "components/header.comp";
 import Layout from "components/layout.comp";
 import { FC } from "react";
 
-const OrderView: FC = () => {
+const CartViewPage: FC = () => {
   return (
     <>
       <Header />
@@ -13,4 +13,4 @@ const OrderView: FC = () => {
   )
 }
 
-export default OrderView;
+export default CartViewPage;
