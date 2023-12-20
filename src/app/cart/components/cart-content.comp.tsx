@@ -1,12 +1,12 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
+import TableRowsLoader from "components/table-rows-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { FC, useEffect } from "react";
 import { getCart } from "../store/cart.actions";
 import { cartSelector } from "../store/cart.selectors";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 import EmptyCart from "./empty-cart.comp";
-import TableRowsLoader from "./table-rows-loader.comp";
 
 const CartContent: FC = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +41,7 @@ const CartContent: FC = () => {
           <TableBody>
             {
               cart && isPending.cart ?
-                <TableRowsLoader rowsNum={20} />
+                <TableRowsLoader rowsCount={20} cellsCount={5} />
                 :
                 cart.items.map((cartItem) => (
                   <TableRow
@@ -58,7 +58,9 @@ const CartContent: FC = () => {
                       <DeleteCartItemButton cart={{ itemsLength: cart.items.length, id: cart.id }} itemId={cartItem.id} />
                     </TableCell>
                   </TableRow>
-                ))}
+                ))
+
+            }
           </TableBody>
         </Table>
       </TableContainer>
