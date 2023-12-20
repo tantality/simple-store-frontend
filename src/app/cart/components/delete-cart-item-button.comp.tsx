@@ -23,7 +23,15 @@ const DeleteCartItemButton: FC<DeleteCartItemButtonProps> = ({ cart, itemId }) =
     }
   }
 
-  return <Button onClick={handleButtonClick} variant="outlined">Delete</Button>;
+  return (
+    <Button
+      onClick={handleButtonClick}
+      variant="outlined"
+      sx={{ borderColor: 'black', color: 'black' }}
+    >
+      Delete
+    </Button>
+  )
 };
 
 export default DeleteCartItemButton;
