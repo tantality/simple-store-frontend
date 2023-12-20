@@ -1,5 +1,9 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { Card, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
+import { authSelector } from "app/auth/store/auth.selectors";
+import { cartSelector } from "app/cart/store/cart.selectors";
+import { useAppSelector } from "hooks/redux.hooks";
+import { FC, useState } from "react";
+import AddToCartButton from "./add-to-cart-button.comp";
 
 export interface Product {
   id: string;
@@ -13,6 +17,13 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const { cart } = useAppSelector(cartSelector);
+  const { isAuth } = useAppSelector(authSelector);
+
+  const productInCart = cart?.items?.find(item => item.productId === product.id);
+
+  const [isProductInCart, setIsProductInCart] = useState<boolean>(Boolean(productInCart));
+
   return (
     <Card sx={{ width: '100%' }}>
       <CardMedia image={product.img} title={product.name} sx={{ height: "220px" }} />
@@ -27,7 +38,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           </Stack>
         </CardContent>
         <CardActions sx={{ p: 0 }}>
-          <Button fullWidth={true} variant={'contained'}>Add to card</Button>
+          {isAuth ? <AddToCartButton isProductInCart={isProductInCart} /> : null}
         </CardActions>
       </Stack >
     </Card >
