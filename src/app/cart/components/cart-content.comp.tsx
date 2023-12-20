@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Stack } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { FC, useEffect } from "react";
@@ -28,7 +28,8 @@ const CartContent: FC = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">Item</TableCell>
+              <TableCell align="left">Img</TableCell>
+              <TableCell align="right">Name</TableCell>
               <TableCell align="right">Unit Price</TableCell>
               <TableCell align="right">Quantity</TableCell>
               <TableCell align="right"></TableCell>
@@ -40,7 +41,10 @@ const CartContent: FC = () => {
                 key={cartItem.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell align="right"></TableCell>
+                <TableCell align="right">
+                  <img src={cartItem.product.img} alt={cartItem.product.name} width="80px" height="80px" style={{ objectFit: 'cover' }}></img>
+                </TableCell>
+                <TableCell align="right">{cartItem.product.name}</TableCell>
                 <TableCell align="right">{cartItem.price}</TableCell>
                 <TableCell align="right">{cartItem.quantity}</TableCell>
                 <TableCell align="right">
