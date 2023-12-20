@@ -3,17 +3,11 @@ import { authSelector } from "app/auth/store/auth.selectors";
 import { cartSelector } from "app/cart/store/cart.selectors";
 import { useAppSelector } from "hooks/redux.hooks";
 import { FC, useState } from "react";
-import AddToCartButton from "./add-to-cart-button.comp";
-
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  img: string;
-}
+import { ProductDto } from "../types/product.dto";
+import AddCartItemButton from "./add-cart-item-button.comp";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductDto;
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
@@ -23,6 +17,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const productInCart = cart?.items?.find(item => item.productId === product.id);
 
   const [isProductInCart, setIsProductInCart] = useState<boolean>(Boolean(productInCart));
+
+  const cardActions = (
+    <CardActions sx={{ p: 0 }}>
+      <AddCartItemButton isProductInCart={isProductInCart} setIsProductInCart={setIsProductInCart} product={product} />
+    </CardActions>
+  );
 
   return (
     <Card sx={{ width: '100%' }}>
@@ -37,9 +37,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </Stack>
           </Stack>
         </CardContent>
-        <CardActions sx={{ p: 0 }}>
-          {isAuth ? <AddToCartButton isProductInCart={isProductInCart} /> : null}
-        </CardActions>
+        {isAuth ? cardActions : null}
       </Stack >
     </Card >
   );
