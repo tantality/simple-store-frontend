@@ -1,19 +1,13 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
-import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
-import { FC, useEffect } from "react";
-import { getCart } from "../store/cart.actions";
+import { useAppSelector } from "hooks/redux.hooks";
+import { FC } from "react";
 import { cartSelector } from "../store/cart.selectors";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 import EmptyCart from "./empty-cart.comp";
 
 const CartContent: FC = () => {
-  const dispatch = useAppDispatch();
   const { cart, isPending } = useAppSelector(cartSelector);
-
-  useEffect(() => {
-    dispatch(getCart())
-  }, [dispatch])
 
   if (isPending.cart && !cart) {
     return <CenteredLoader />
