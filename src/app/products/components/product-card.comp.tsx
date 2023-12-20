@@ -28,7 +28,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     <Card sx={{ width: '100%' }}>
       <CardMedia image={product.img} title={product.name} sx={{ height: "220px" }} />
       <Stack rowGap={'20px'} sx={{ bgColor: "white", p: 2 }}>
-        <CardContent sx={{ p: 0 }}>
+        <CardContent sx={{ p: '0 !important' }}>
           <Stack rowGap={'14px'}>
             <Typography variant={'h3'} sx={{ fontSize: '1.3rem', fontWeight: 600 }}>{product.name}</Typography>
             <Stack justifyContent={'space-between'} alignItems={'center'} flexDirection={'row'}>
