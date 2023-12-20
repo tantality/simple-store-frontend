@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Stack } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { FC, useEffect } from "react";
@@ -18,7 +18,8 @@ const CartContent: FC = () => {
     return <CenteredLoader />
   }
 
-  if (!cart?.items?.length && !isPending.cart) {
+  const isCartEmpty = (!cart?.items?.length && !isPending.cart) || !cart;
+  if (isCartEmpty) {
     return <EmptyCart />
   }
 
@@ -36,7 +37,7 @@ const CartContent: FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cart?.items.map((cartItem) => (
+            {cart.items.map((cartItem) => (
               <TableRow
                 key={cartItem.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
