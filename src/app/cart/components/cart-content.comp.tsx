@@ -1,12 +1,22 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
-import { useAppSelector } from "hooks/redux.hooks";
-import { FC } from "react";
+import MinusIconButton from "components/minus-icon-button.comp";
+import PlusIconButton from "components/plus-icon-buttom.comp";
+import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
+import { FC, MouseEvent } from "react";
+import { updateCartItem } from "../store/cart.actions";
 import { cartSelector } from "../store/cart.selectors";
+import { CartItemDto } from "../types/cart-item.dto";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 import EmptyCart from "./empty-cart.comp";
 
+enum CartItemQuantity {
+  Min = 1,
+  Max = 100
+}
+
 const CartContent: FC = () => {
+  const dispatch = useAppDispatch()
   const { cart, isPending } = useAppSelector(cartSelector);
 
   if (isPending.cart && !cart) {
@@ -16,6 +26,24 @@ const CartContent: FC = () => {
   const isCartEmpty = (!cart?.items?.length && !isPending.cart) || !cart;
   if (isCartEmpty) {
     return <EmptyCart />
+  }
+
+  const handleReduceCartItemQuantity = (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => {
+    const changedQuantity = cartItem.quantity - 1;
+    if (changedQuantity >= CartItemQuantity.Min) {
+      const params = { itemId: cartItem.id, cartId };
+      const body = { quantity: changedQuantity };
+      dispatch(updateCartItem({ params, body }))
+    }
+  }
+
+  const handleIncreaseCartItemQuantity = (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => {
+    const changedQuantity = cartItem.quantity + 1;
+    if (changedQuantity <= CartItemQuantity.Max) {
+      const params = { itemId: cartItem.id, cartId };
+      const body = { quantity: changedQuantity };
+      dispatch(updateCartItem({ params, body }))
+    }
   }
 
   return (
@@ -43,7 +71,19 @@ const CartContent: FC = () => {
                   </TableCell>
                   <TableCell align="right">{cartItem.product.name}</TableCell>
                   <TableCell align="right">{cartItem.price}</TableCell>
-                  <TableCell align="right">{cartItem.quantity}</TableCell>
+                  <TableCell align="right">
+                    <Stack flexDirection={'row'} columnGap="15px" justifyContent="flex-end" alignItems="center">
+                      <MinusIconButton
+                        disabled={cartItem.quantity === CartItemQuantity.Min}
+                        onClick={(e) => handleReduceCartItemQuantity(e, cart.id, cartItem)}
+                      />
+                      {cartItem.quantity}
+                      <PlusIconButton
+                        disabled={cartItem.quantity === CartItemQuantity.Max}
+                        onClick={(e) => handleIncreaseCartItemQuantity(e, cart.id, cartItem)}
+                      />
+                    </Stack>
+                  </TableCell>
                   <TableCell align="right">
                     <DeleteCartItemButton cart={{ itemsLength: cart.items.length, id: cart.id }} itemId={cartItem.id} />
                   </TableCell>
