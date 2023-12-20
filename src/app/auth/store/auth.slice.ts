@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "../types/auth.state";
-import { refreshTokens, signIn, signUp } from "./auth.actions";
+import { refreshTokens, signIn, signOut, signUp } from "./auth.actions";
 
 const initialState: AuthState = {
   isAuth: false,
@@ -41,6 +41,19 @@ export const authSlice = createSlice({
         state.isAuth = true;
       })
       .addCase(signIn.rejected, (state, action: any & { payload: any }) => {
+        state.isPending.isAuth = false;
+        state.errors.isAuth = action.payload.message;
+      })
+      // Sign Out
+      .addCase(signOut.pending, (state) => {
+        state.isPending.isAuth = true;
+        state.errors.isAuth = null;
+      })
+      .addCase(signOut.fulfilled, (state) => {
+        state.isPending.isAuth = false;
+        state.isAuth = false;
+      })
+      .addCase(signOut.rejected, (state, action: any & { payload: any }) => {
         state.isPending.isAuth = false;
         state.errors.isAuth = action.payload.message;
       })
