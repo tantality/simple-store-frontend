@@ -46,16 +46,19 @@ const CartContent: FC = () => {
     }
   }
 
+  const tableBodyCellStyles = { fontSize: '16px', fontWeight: 500 };
+  const tableHeadCellStyles = { fontSize: '15px' };
+
   return (
     <>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">Img</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Unit Price</TableCell>
-              <TableCell align="right">Quantity</TableCell>
+              <TableCell align="left" sx={tableHeadCellStyles}>Img</TableCell>
+              <TableCell align="right" sx={tableHeadCellStyles}>Name</TableCell>
+              <TableCell align="right" sx={tableHeadCellStyles}>Unit Price</TableCell>
+              <TableCell align="right" sx={tableHeadCellStyles}>Quantity</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
@@ -69,9 +72,9 @@ const CartContent: FC = () => {
                   <TableCell align="right">
                     <img src={cartItem.product.img} alt={cartItem.product.name} width="80px" height="80px" style={{ objectFit: 'cover' }}></img>
                   </TableCell>
-                  <TableCell align="right">{cartItem.product.name}</TableCell>
-                  <TableCell align="right">{cartItem.price}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" sx={tableBodyCellStyles}>{cartItem.product.name}</TableCell>
+                  <TableCell align="right" sx={tableBodyCellStyles}>${cartItem.price}</TableCell>
+                  <TableCell align="right" sx={tableBodyCellStyles}>
                     <Stack flexDirection={'row'} columnGap="15px" justifyContent="flex-end" alignItems="center">
                       <MinusIconButton
                         disabled={cartItem.quantity === CartItemQuantity.Min}
