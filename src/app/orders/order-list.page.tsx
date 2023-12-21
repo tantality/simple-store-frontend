@@ -1,16 +1,17 @@
 import Header from "components/header.comp";
 import Layout from "components/layout.comp";
 import { FC } from "react";
+import OrderListContent from "./components/order-list-content.comp";
 
-const OrderList: FC = () => {
+const OrderListPage: FC = () => {
   return (
     <>
       <Header />
       <Layout>
-        <div>Order List</div>
+        <OrderListContent />
       </Layout>
     </>
   )
 }
 
-export default OrderList;
+export default OrderListPage;
