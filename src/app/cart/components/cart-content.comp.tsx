@@ -1,4 +1,4 @@
-import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
 import MinusIconButton from "components/minus-icon-button.comp";
 import PlusIconButton from "components/plus-icon-buttom.comp";
@@ -50,7 +50,7 @@ const CartContent: FC = () => {
   const tableHeadCellStyles = { fontSize: '15px' };
 
   return (
-    <>
+    <Stack rowGap="50px">
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -70,7 +70,7 @@ const CartContent: FC = () => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell align="right">
-                    <img src={cartItem.product.img} alt={cartItem.product.name} width="80px" height="80px" style={{ objectFit: 'cover' }}></img>
+                    <img src={cartItem.product.img} alt={cartItem.product.name} width="100px" height="100px" style={{ objectFit: 'cover' }}></img>
                   </TableCell>
                   <TableCell align="right" sx={tableBodyCellStyles}>{cartItem.product.name}</TableCell>
                   <TableCell align="right" sx={tableBodyCellStyles}>${cartItem.price}</TableCell>
@@ -96,7 +96,11 @@ const CartContent: FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+      <Stack flexDirection="row" columnGap="40px" alignItems="center" justifyContent="flex-end">
+        <Typography fontSize="1.3rem" fontWeight={600}>{`Total price: $ ${cart.totalPrice}`}</Typography>
+        <Button variant="contained">Order</Button>
+      </Stack>
+    </Stack>
   )
 }
 
