@@ -1,16 +1,17 @@
 import Header from "components/header.comp";
 import Layout from "components/layout.comp";
 import { FC } from "react";
+import CartContent from "./components/cart-content.comp";
 
-const OrderView: FC = () => {
+const CartViewPage: FC = () => {
   return (
     <>
       <Header />
       <Layout>
-        <div>Cart</div>
+        <CartContent />
       </Layout>
     </>
   )
 }
 
-export default OrderView;
+export default CartViewPage;

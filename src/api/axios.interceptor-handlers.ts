@@ -1,10 +1,6 @@
 import { AuthDto } from "app/auth/types/auth.dto";
-import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig, isAxiosError } from "axios";
+import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { axiosAuthClient } from "./axios.client";
-
-interface ExtendedAxiosConfig extends AxiosRequestConfig {
-  retry: boolean;
-}
 
 export const onFulfilledRequest = (
   config: InternalAxiosRequestConfig<any>
@@ -15,43 +11,51 @@ export const onFulfilledRequest = (
   return config;
 };
 
-export const onRejectedResponse = async (err: any): Promise<any> => {
-  const res = await handleResponseError(err);
-  return res;
-};
+interface RetryQueueItem {
+  resolve: (value?: any) => void;
+  reject: (error?: any) => void;
+  config: AxiosRequestConfig;
+}
 
-const handleResponseError = async (err: any): Promise<any> => {
-  if (isAxiosError(err)) {
-    const requestConfig = err.config as ExtendedAxiosConfig;
-    const errStatus = err.response?.status;
+const refreshAndRetryQueue: RetryQueueItem[] = [];
 
-    if (errStatus && requestConfig.retry) {
-      return Promise.reject(err);
-    }
+let isRefreshing = false;
 
-    switch (errStatus) {
-      case 401: {
-        const res = await handleUnauthorizedError(requestConfig);
-        return res;
+export const onRejectedResponse = async (error: any) => {
+  const originalRequest: AxiosRequestConfig = error.config;
+
+  if (error.response && error.response.status === 401) {
+    if (!isRefreshing) {
+      isRefreshing = true;
+      try {
+        const { data } = await axiosAuthClient.post<any, AxiosResponse<AuthDto>>("/auth/refresh-tokens");
+
+        localStorage.setItem("access-token", data.accessToken);
+
+        error.config.headers["Authorization"] = `Bearer ${data.accessToken}`;
+
+        refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
+          axiosAuthClient
+            .request(config)
+            .then((response) => resolve(response))
+            .catch((err) => reject(err));
+        });
+
+        refreshAndRetryQueue.length = 0;
+
+        return axiosAuthClient(originalRequest);
+      } catch (refreshError) {
+        localStorage.removeItem("access-token");
+        throw refreshError;
+      } finally {
+        isRefreshing = false;
       }
     }
+
+    return new Promise<void>((resolve, reject) => {
+      refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
+    });
   }
 
-  return Promise.reject(err);
-};
-
-const handleUnauthorizedError = async (config: ExtendedAxiosConfig): Promise<any> => {
-  config.retry = true;
-
-  try {
-    const { data } = await axiosAuthClient.post<any, AxiosResponse<AuthDto>>("/auth/refresh-tokens");
-
-    localStorage.setItem("access-token", data.accessToken);
-
-    return axiosAuthClient(config);
-  } catch (error) {
-    localStorage.removeItem("access-token");
-
-    return Promise.reject(error);
-  }
+  return Promise.reject(error);
 };

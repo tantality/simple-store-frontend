@@ -1,5 +1,6 @@
 import { refreshTokens } from "app/auth/store/auth.actions";
 import { authSelector } from "app/auth/store/auth.selectors";
+import { getCart } from "app/cart/store/cart.actions";
 import CenteredLoader from "components/centered-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import React, { FC, Suspense, useEffect } from "react";
@@ -33,6 +34,7 @@ const AppRoutes = () => {
   useEffect(() => {
     if (localStorage.getItem("access-token")) {
       dispatch(refreshTokens())
+      dispatch(getCart())
     }
   }, [dispatch])
 

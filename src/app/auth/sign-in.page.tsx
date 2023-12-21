@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { checkPasswordAndEmailSchema } from "./validation-schemas/check-password-and-email.schema";
 import { useAppDispatch } from "hooks/redux.hooks";
 import { signIn } from "./store/auth.actions";
+import { getCart } from "app/cart/store/cart.actions";
 
 const SignInPage: FC = () => {
   const { control, getValues, handleSubmit, formState: { errors } } = useForm({
@@ -21,11 +22,11 @@ const SignInPage: FC = () => {
 
   const handleFormSubmit: SubmitHandler<FieldValues> = async () => {
     const formState = getValues();
-    await dispatch(signIn({ body: formState })).then((data) => {
-      if (data.meta.requestStatus !== 'rejected') {
-        navigate('/products/')
-      }
-    })
+    const response = await dispatch(signIn({ body: formState }));
+    if (response.meta.requestStatus !== 'rejected') {
+      dispatch(getCart());
+      navigate('/products/')
+    }
   };
 
   return (
