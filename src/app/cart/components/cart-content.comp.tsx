@@ -7,16 +7,20 @@ import { CartItemQuantity } from "../constants";
 import { getCart, placeOrder, updateCartItem } from "../store/cart.actions";
 import { cartSelector } from "../store/cart.selectors";
 import { CartItemDto } from "../types/cart-item.dto";
+import CartError from "./cart-error.comp";
 import CartItemTable from "./cart-item-table.comp";
 import EmptyCart from "./empty-cart.comp";
 import PlaceOrderButton from "./place-order-button.comp";
 
 const CartContent: FC = () => {
   const dispatch = useAppDispatch()
-  const { cart, isPending } = useAppSelector(cartSelector);
+  const { cart, isPending, errors } = useAppSelector(cartSelector);
   const [isPlaceOrderBtnDisabled, setIsPlaceOrderBtnDisabled] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
 
+  if (errors.cart && !cart) {
+    return <CartError />
+  }
 
   if (isPending.cart && !cart) {
     return <CenteredLoader />
@@ -61,7 +65,7 @@ const CartContent: FC = () => {
     const response = await dispatch(placeOrder({ params: { cartId } }));
     if (response.meta.requestStatus === 'rejected') {
       setIsPlaceOrderBtnDisabled(false);
-      addSnackbar('Failed to placed the order. There is no necessary product quantity.', 'error');
+      addSnackbar('Failed to place the order.', 'error');
     }
     else {
       dispatch(getCart());
