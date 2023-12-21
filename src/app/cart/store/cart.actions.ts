@@ -38,6 +38,19 @@ export const createCartItem = createAsyncThunk<CartDto, { params: CartParamsDto;
   }
 );
 
+export const placeOrder = createAsyncThunk<CartDto, { params: CartParamsDto }>(
+  "PUT/place-an-order",
+  async ({ params }, { rejectWithValue }) => {
+    try {
+      const { cartId } = params;
+      const response = await axiosAuthClient.put<CartDto>(`/orders/place/${cartId}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const updateCartItem = createAsyncThunk<CartDto, { params: CartItemParamsDto; body: UpdateCartItemForm }>(
   "PUT/update-cart-item",
   async ({ params, body }, { rejectWithValue }) => {
