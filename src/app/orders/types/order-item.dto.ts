@@ -1,7 +1,7 @@
 import { ProductDto } from "app/products/types/product.dto";
 import { UUIDDto } from "types/uuid-dto.type";
 
-export interface CartItemDto extends UUIDDto {
+export interface OrderItemDto extends UUIDDto {
   orderId: string;
   productId: string;
   quantity: number;
