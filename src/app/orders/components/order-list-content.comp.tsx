@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { FC, useEffect } from "react";
 import { getUserOrders } from "../store/orders.actions";
 import { ordersSelector } from "../store/orders.selectors";
+import NoOrders from "./no-orders.comp";
 
 const OrderListContent: FC = () => {
   const dispatch = useAppDispatch();
@@ -14,12 +15,12 @@ const OrderListContent: FC = () => {
   }, [dispatch])
 
   if (isPending.orders && !orders.length) {
-    return <CenteredLoader />
+    return <CenteredLoader />;
   }
 
   const noOrders = !orders.length && !isPending.orders;
   if (noOrders) {
-    return <div>No orders</div>
+    return <NoOrders />;
   }
 
   const tableBodyCellStyles = { fontSize: '16px', fontWeight: 500 };
