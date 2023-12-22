@@ -6,6 +6,7 @@ import { FC } from "react";
 import { useForm, SubmitHandler, FieldValues, Controller } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { signUp } from "./store/auth.actions";
+import { useSnackbar } from "notistack";
 import { checkPasswordAndEmailSchema } from "./validation-schemas/check-password-and-email.schema";
 
 const SignUpPage: FC = () => {
@@ -17,15 +18,17 @@ const SignUpPage: FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleFormSubmit: SubmitHandler<FieldValues> = async () => {
     const formState = getValues();
 
-    await dispatch(signUp({ body: formState })).then((data) => {
-      if (data.meta.requestStatus !== 'rejected') {
-        navigate('/products/')
-      }
-    })
+    const response = await dispatch(signUp({ body: formState }))
+    if (response.meta.requestStatus !== 'rejected') {
+      navigate('/products/')
+    } else {
+      enqueueSnackbar('Failed to sign up. Please try again later.', { variant: 'error' });
+    }
   };
 
   return (

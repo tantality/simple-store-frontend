@@ -1,13 +1,13 @@
 import Message from "components/message.comp";
 
-const CartError = () => {
+const OrderListError = () => {
   return (
     <Message
-      title="Failed to get the cart"
+      title="Failed to get the orders"
       text="Please try again later"
       btnProps={{ href: "/products", text: "Go to marketplace" }}
     />
   )
 };
 
-export default CartError;
+export default OrderListError;

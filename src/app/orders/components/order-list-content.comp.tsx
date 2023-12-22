@@ -5,14 +5,19 @@ import { FC, useEffect } from "react";
 import { getUserOrders } from "../store/orders.actions";
 import { ordersSelector } from "../store/orders.selectors";
 import NoOrders from "./no-orders.comp";
+import OrderListError from "./order-list-error.comp";
 
 const OrderListContent: FC = () => {
   const dispatch = useAppDispatch();
-  const { orders, isPending } = useAppSelector(ordersSelector);
+  const { orders, isPending, errors } = useAppSelector(ordersSelector);
 
   useEffect(() => {
     dispatch(getUserOrders({ query: { excludeCart: true } }))
   }, [dispatch])
+
+  if (errors.orders) {
+    return <OrderListError />;
+  }
 
   if (isPending.orders && !orders.length) {
     return <CenteredLoader />;
