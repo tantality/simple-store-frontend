@@ -17,13 +17,13 @@ const Header = () => {
             <Typography variant="h1" component="div" sx={{ flexGrow: 1 }} fontSize={'1.5rem'} fontWeight={600}>
               Shop
             </Typography>
-            <NavLink to={'/products/'} >
+            <NavLink to={'/products'} >
               <Typography>Marketplace</Typography>
             </NavLink>
-            <NavLink to={'/orders/'}>
+            <NavLink to={'/orders'}>
               <Typography>Order history</Typography>
             </NavLink>
-            <NavLink to={'/cart/'}>
+            <NavLink to={'/cart'}>
               <Typography>Cart</Typography>
             </NavLink>
             {isAuth ? <SignOutButton /> : <SignInButton />}
