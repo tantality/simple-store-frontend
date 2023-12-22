@@ -6,13 +6,14 @@ import { getAllProducts } from "../store/products.actions";
 import { productsSelector } from "../store/products.selectors";
 import NoProducts from "./no-products.comp";
 import ProductCards from "./product-cards.comp";
+import ProductListError from "./product-list-error.comp";
 
 const ProductList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageCount, setPageCount] = useState<number | null>(null);
 
   const dispatch = useAppDispatch();
-  const { isPending, products } = useAppSelector(productsSelector);
+  const { isPending, products, errors } = useAppSelector(productsSelector);
 
   const handleCurrentPageChange = (event: ChangeEvent<unknown>, page: number): void => {
     setCurrentPage(page);
@@ -25,6 +26,10 @@ const ProductList: FC = () => {
       }
     }))
   }, [dispatch, currentPage])
+
+  if (errors.products) {
+    return <ProductListError />
+  }
 
   if (!products.length && !isPending) {
     return <NoProducts />
