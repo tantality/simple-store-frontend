@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
-import { useSnackbar, VariantType } from "notistack";
+import { useSnackbar } from "notistack";
 import { FC, MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartItemQuantity } from "../constants";
@@ -42,7 +42,7 @@ const CartContent: FC = () => {
       const response = await dispatch(updateCartItem({ params, body }));
 
       if (response.meta.requestStatus === 'rejected') {
-        addSnackbar('Failed to reduce the quantity of the product.', 'error');
+        enqueueSnackbar('Failed to increase the quantity of the product.', { variant: 'error' });
       }
     }
   }
@@ -57,7 +57,7 @@ const CartContent: FC = () => {
       const response = await dispatch(updateCartItem({ params, body }));
 
       if (response.meta.requestStatus === 'rejected') {
-        addSnackbar('Failed to increase the quantity of the product.', 'error');
+        enqueueSnackbar('Failed to increase the quantity of the product.', { variant: 'error' });
       }
     }
   }
@@ -65,20 +65,17 @@ const CartContent: FC = () => {
   const handlePlaceOrderButtonClick = async (e: MouseEvent<HTMLButtonElement>, cartId: string) => {
     setIsPlaceOrderBtnDisabled(true);
     const response = await dispatch(placeOrder({ params: { cartId } }));
+
     if (response.meta.requestStatus === 'rejected') {
       setIsPlaceOrderBtnDisabled(false);
-      addSnackbar('Failed to place the order.', 'error');
+      enqueueSnackbar('Failed to place the order.', { variant: 'error' });
     }
     else {
-      addSnackbar('The order is successfully placed', 'success');
+      enqueueSnackbar('The order is successfully placed.', { variant: 'success' });
       dispatch(getCart());
       navigate('/products/');
     }
   }
-
-  const addSnackbar = (text: string, variant: VariantType) => {
-    enqueueSnackbar(text, { variant });
-  };
 
   return (
     <Stack rowGap="50px">
