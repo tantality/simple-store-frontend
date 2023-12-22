@@ -27,7 +27,7 @@ const SignUpPage: FC = () => {
     if (response.meta.requestStatus !== 'rejected') {
       navigate('/products/')
     } else {
-      enqueueSnackbar('Failed to sign up. Please try again later', { variant: 'error' });
+      enqueueSnackbar('Failed to sign up. Please try again later.', { variant: 'error' });
     }
   };
 

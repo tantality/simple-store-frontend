@@ -21,7 +21,7 @@ const DeleteCartItemButton: FC<DeleteCartItemButtonProps> = ({ cart, itemId }) =
       const response = await dispatch(deleteCart({ params }));
 
       if (response.meta.requestStatus === 'rejected') {
-        enqueueSnackbar('Failed to delete the item', { variant: 'error' });
+        enqueueSnackbar('Failed to delete the item.', { variant: 'error' });
       }
     }
     else {
@@ -29,7 +29,7 @@ const DeleteCartItemButton: FC<DeleteCartItemButtonProps> = ({ cart, itemId }) =
       const response = await dispatch(deleteCartItem({ params }));
 
       if (response.meta.requestStatus === 'rejected') {
-        enqueueSnackbar('Failed to delete the item', { variant: 'error' });
+        enqueueSnackbar('Failed to delete the item.', { variant: 'error' });
       }
     }
   }

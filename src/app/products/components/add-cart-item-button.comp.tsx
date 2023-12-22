@@ -23,7 +23,7 @@ const AddCartItemButton: FC<AddCartItemButtonProps> = ({ isProductInCart, setIsP
     const cartExistsAndContainsItems = cart && cart.items.length;
 
     if (errors.cart && !cart) {
-      enqueueSnackbar('Failed to add the product in the cart. Please try again later', { variant: 'error' });
+      enqueueSnackbar('Failed to add the product in the cart. Please try again later.', { variant: 'error' });
       return;
     }
 

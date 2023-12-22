@@ -30,7 +30,7 @@ const SignInPage: FC = () => {
       navigate('/products/');
     }
     else {
-      enqueueSnackbar('Failed to sign in. Please try again later', { variant: 'error' });
+      enqueueSnackbar('Failed to sign in. Please try again later.', { variant: 'error' });
     }
   };
 
