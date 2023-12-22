@@ -34,7 +34,7 @@ const ProductList: FC = () => {
     return <ProductListError />
   }
 
-  if (!products.length && !isPending) {
+  if (count === 0) {
     return <NoProducts />
   }
 
@@ -44,7 +44,7 @@ const ProductList: FC = () => {
     <section className="product-list">
       <Stack alignItems="center" spacing="50px">
         {isPending.products ? <CenteredLoader /> : <ProductCards products={products} />}
-        {pageCount && <Pagination onChange={handleCurrentPageChange} page={currentPage} count={pageCount} size="large" />}
+        {pageCount > 1 && <Pagination onChange={handleCurrentPageChange} page={currentPage} count={pageCount} size="large" />}
       </Stack>
     </section>
   );
