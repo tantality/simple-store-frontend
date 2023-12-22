@@ -4,7 +4,7 @@ const CartError = () => {
   return (
     <Message
       title="Failed to get the cart"
-      text="Please try later"
+      text="Please try again later"
       btnProps={{ href: "/products", text: "Go to marketplace" }}
     />
   )
