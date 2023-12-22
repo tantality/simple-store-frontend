@@ -3,6 +3,7 @@ import CenteredLoader from "components/centered-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { useSnackbar, VariantType } from "notistack";
 import { FC, MouseEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartItemQuantity } from "../constants";
 import { getCart, placeOrder, updateCartItem } from "../store/cart.actions";
 import { cartSelector } from "../store/cart.selectors";
@@ -17,6 +18,7 @@ const CartContent: FC = () => {
   const { cart, isPending, errors } = useAppSelector(cartSelector);
   const [isPlaceOrderBtnDisabled, setIsPlaceOrderBtnDisabled] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   if (errors.cart && !cart) {
     return <CartError />
@@ -68,7 +70,9 @@ const CartContent: FC = () => {
       addSnackbar('Failed to place the order.', 'error');
     }
     else {
+      addSnackbar('The order is successfully placed', 'success');
       dispatch(getCart());
+      navigate('/products/');
     }
   }
 
