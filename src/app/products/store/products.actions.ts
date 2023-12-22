@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosClient } from "api/axios.client";
 import { GetAllProductsQueryDto } from "../types/get-all-products-query.dto";
-import { ProductDto } from "../types/product.dto";
+import { ProductsDto } from "../types/products.dto";
 
-export const getAllProducts = createAsyncThunk<ProductDto[], { query?: Partial<GetAllProductsQueryDto> }>(
+export const getAllProducts = createAsyncThunk<ProductsDto, { query?: Partial<GetAllProductsQueryDto> }>(
   "GET/all-products",
   async ({ query = {} }, { rejectWithValue }) => {
     try {
