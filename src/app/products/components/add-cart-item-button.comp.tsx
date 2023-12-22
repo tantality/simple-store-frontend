@@ -20,14 +20,14 @@ const AddCartItemButton: FC<AddCartItemButtonProps> = ({ isProductInCart, setIsP
   const btnText = isProductInCart ? 'In cart' : 'Add to card';
 
   const handleButtonClick = async () => {
-    const isCartFilled = cart && cart.items.length;
+    const cartExistsAndContainsItems = cart && cart.items.length;
 
     if (errors.cart && !cart) {
       enqueueSnackbar('Failed to add the product in the cart. Please try again later', { variant: 'error' });
       return;
     }
 
-    if (isCartFilled) {
+    if (cartExistsAndContainsItems) {
       const params = { cartId: cart.id };
       const body = { productId: product.id, quantity: 1 };
       const response = await dispatch(createCartItem({ params, body }));
