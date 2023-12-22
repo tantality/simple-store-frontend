@@ -1,21 +1,54 @@
 import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import MinusIconButton from "components/minus-icon-button.comp";
 import PlusIconButton from "components/plus-icon-buttom.comp";
+import { useAppDispatch } from "hooks/redux.hooks";
+import { enqueueSnackbar } from "notistack";
 import { FC, MouseEvent } from "react";
 import { CartItemQuantity } from "../constants";
+import { updateCartItem } from "../store/cart.actions";
 import { CartItemDto } from "../types/cart-item.dto";
 import { CartDto } from "../types/cart.dto";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 
 interface CartItemTableProps {
   cart: CartDto;
-  onIncreaseCartItemQuantityBtnClick: (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => void;
-  onReduceCartItemQuantityBtnClick: (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => void;
 }
 
 const CartItemTable: FC<CartItemTableProps> = ({ cart, ...props }) => {
+  const dispatch = useAppDispatch();
+
   const tableBodyCellStyles = { fontSize: '16px', fontWeight: 500 };
   const tableHeadCellStyles = { fontSize: '15px' };
+
+
+  const handleReduceCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => {
+    const changedQuantity = cartItem.quantity - 1;
+
+    if (changedQuantity >= CartItemQuantity.Min) {
+      const params = { itemId: cartItem.id, cartId };
+      const body = { quantity: changedQuantity };
+      const response = await dispatch(updateCartItem({ params, body }));
+
+      if (response.meta.requestStatus === 'rejected') {
+        enqueueSnackbar('Failed to increase the quantity of the product.', { variant: 'error' });
+      }
+    }
+  }
+
+  const handleIncreaseCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => {
+    const changedQuantity = cartItem.quantity + 1;
+
+    if (changedQuantity <= CartItemQuantity.Max) {
+
+      const params = { itemId: cartItem.id, cartId };
+      const body = { quantity: changedQuantity };
+      const response = await dispatch(updateCartItem({ params, body }));
+
+      if (response.meta.requestStatus === 'rejected') {
+        enqueueSnackbar('Failed to increase the quantity of the product.', { variant: 'error' });
+      }
+    }
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -45,12 +78,12 @@ const CartItemTable: FC<CartItemTableProps> = ({ cart, ...props }) => {
                   <Stack flexDirection={'row'} columnGap="15px" justifyContent="flex-end" alignItems="center">
                     <MinusIconButton
                       disabled={cartItem.quantity === CartItemQuantity.Min}
-                      onClick={(e) => props.onReduceCartItemQuantityBtnClick(e, cart.id, cartItem)}
+                      onClick={(e) => handleReduceCartItemQuantity(e, cart.id, cartItem)}
                     />
                     {cartItem.quantity}
                     <PlusIconButton
                       disabled={cartItem.quantity === CartItemQuantity.Max}
-                      onClick={(e) => props.onIncreaseCartItemQuantityBtnClick(e, cart.id, cartItem)}
+                      onClick={(e) => handleIncreaseCartItemQuantity(e, cart.id, cartItem)}
                     />
                   </Stack>
                 </TableCell>
