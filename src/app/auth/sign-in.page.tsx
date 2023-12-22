@@ -9,6 +9,7 @@ import { checkPasswordAndEmailSchema } from "./validation-schemas/check-password
 import { useAppDispatch } from "hooks/redux.hooks";
 import { signIn } from "./store/auth.actions";
 import { getCart } from "app/cart/store/cart.actions";
+import { useSnackbar } from "notistack";
 
 const SignInPage: FC = () => {
   const { control, getValues, handleSubmit, formState: { errors } } = useForm({
@@ -19,13 +20,17 @@ const SignInPage: FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleFormSubmit: SubmitHandler<FieldValues> = async () => {
     const formState = getValues();
     const response = await dispatch(signIn({ body: formState }));
     if (response.meta.requestStatus !== 'rejected') {
       dispatch(getCart());
-      navigate('/products/')
+      navigate('/products/');
+    }
+    else {
+      enqueueSnackbar('Failed to sign in. Please try again later', { variant: 'error' });
     }
   };
 
