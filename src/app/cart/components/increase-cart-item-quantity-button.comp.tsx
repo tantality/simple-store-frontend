@@ -2,7 +2,7 @@ import PlusIconButton from "components/plus-icon-buttom.comp";
 import { useAppDispatch } from "hooks/redux.hooks";
 import { enqueueSnackbar } from "notistack";
 import { FC, MouseEvent } from "react";
-import { CartItemQuantity } from "../constants";
+import { CartItemQuantity } from "../enums";
 import { updateCartItem } from "../store/cart.actions";
 import { CartItemDto } from "../types/cart-item.dto";
 import { CartDtoIdentifier } from "../types/dto-identifiers.type";

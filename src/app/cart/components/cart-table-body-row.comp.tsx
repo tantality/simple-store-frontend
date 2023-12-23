@@ -1,6 +1,6 @@
 import { TableRow, TableCell, Stack } from "@mui/material";
 import { FC } from "react";
-import { CartItemQuantity } from "../constants";
+import { CartItemQuantity } from "../enums";
 import { CartItemDto } from "../types/cart-item.dto";
 import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
