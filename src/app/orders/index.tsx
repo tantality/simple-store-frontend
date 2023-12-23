@@ -1,5 +1,3 @@
-// import OrdersPage from "./products.routes";
-
 import OrdersRoutes from "./orders.routes";
 
 const OrdersPage = () => {
