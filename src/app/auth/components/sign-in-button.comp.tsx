@@ -2,12 +2,12 @@ import { Button } from "@mui/material";
 import { FC, MouseEvent } from "react";
 
 interface SignInButtonProps {
-  onButtonClick: (e: MouseEvent<HTMLButtonElement>) => void
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-const SignInButton: FC<SignInButtonProps> = ({ onButtonClick }) => {
+const SignInButton: FC<SignInButtonProps> = ({ onClick }) => {
   return (
-    <Button fullWidth={true} variant="contained" type="submit" onSubmit={onButtonClick}>Sign in</Button>
+    <Button fullWidth={true} variant="contained" type="submit" onSubmit={onClick}>Sign in</Button>
   )
 }
 

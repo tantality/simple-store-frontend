@@ -50,7 +50,7 @@ const SignUpForm = () => {
             />
           </Stack>
         </div>
-        <SignUpButton onButtonClick={handleFormSubmit} />
+        <SignUpButton onClick={handleFormSubmit} />
       </Stack>
       <input type="text" autoComplete="on" value="" style={{ display: 'none', opacity: 0, position: 'absolute', left: '-100000px' }} readOnly={true} />
     </form >
