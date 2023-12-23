@@ -8,7 +8,7 @@ import CartTable from "./cart-table.comp";
 import EmptyCart from "./empty-cart.comp";
 import PlaceOrderButton from "./place-order-button.comp";
 
-const CartContent: FC = () => {
+const CartTableWithPlaceOrderBtn: FC = () => {
   const { cart, isPending, errors } = useAppSelector(cartSelector);
   const [isPlaceOrderBtnDisabled, setIsPlaceOrderBtnDisabled] = useState<boolean>(false);
 
@@ -36,4 +36,4 @@ const CartContent: FC = () => {
   )
 }
 
-export default CartContent;
+export default CartTableWithPlaceOrderBtn;

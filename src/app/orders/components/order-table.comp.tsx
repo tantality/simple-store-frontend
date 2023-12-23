@@ -9,7 +9,7 @@ import NoOrders from "./no-orders.comp";
 import OrderListError from "./order-list-error.comp";
 import OrderTableBodyRows from "./order-table-body-rows.comp";
 
-const OrderTabel = () => {
+const OrderTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const dispatch = useAppDispatch();
@@ -83,4 +83,4 @@ const OrderTabel = () => {
   );
 }
 
-export default OrderTabel;
+export default OrderTable;

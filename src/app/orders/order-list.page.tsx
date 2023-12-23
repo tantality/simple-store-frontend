@@ -1,14 +1,14 @@
 import Header from "components/header.comp";
 import Layout from "components/layout.comp";
 import { FC } from "react";
-import OrderTabel from "./components/order-tabel.comp";
+import OrderTable from "./components/order-table.comp";
 
 const OrderListPage: FC = () => {
   return (
     <>
       <Header />
       <Layout>
-        <OrderTabel />
+        <OrderTable />
       </Layout>
     </>
   )
