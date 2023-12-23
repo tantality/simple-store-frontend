@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import { FC, MouseEvent, useState, ChangeEvent } from "react";
 import { CartDto } from "../types/cart.dto";
-import CartTableRow from "./cart-table-row.comp";
+import CartTableBodyRow from "./cart-table-body-row.comp";
 
 interface CartTableProps {
   cart: CartDto;
@@ -40,7 +40,7 @@ const CartTable: FC<CartTableProps> = ({ cart }) => {
             cart.items
               .slice(startPosToSliceFrom, startPosToSliceTo)
               .map((cartItem) => (
-                <CartTableRow
+                <CartTableBodyRow
                   key={cartItem.id}
                   cartItem={cartItem}
                   cart={{ id: cart.id, itemsCount: cart.items.length }}

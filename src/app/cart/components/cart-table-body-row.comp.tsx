@@ -7,7 +7,7 @@ import DeleteCartItemButton from "./delete-cart-item-button.comp";
 import IncreaseCartItemQuantityButton from "./increase-cart-item-quantity-button.comp";
 import ReduceCartItemQuantityButton from "./reduce-cart-item-quantity-button.comp";
 
-interface CartTableRowProps {
+interface CartTableBodyRowProps {
   cart: Cart;
   cartItem: CartItemDto;
 }
@@ -17,7 +17,7 @@ interface Cart {
   itemsCount: number;
 }
 
-const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
+const CartTableBodyRow: FC<CartTableBodyRowProps> = ({ cartItem, cart }) => {
   return (
     <TableRow
       key={cartItem.id}
@@ -50,4 +50,4 @@ const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
   );
 }
 
-export default CartTableRow;
+export default CartTableBodyRow;
