@@ -2,14 +2,19 @@ import { TableRow, TableCell, Stack } from "@mui/material";
 import { FC } from "react";
 import { CartItemQuantity } from "../constants";
 import { CartItemDto } from "../types/cart-item.dto";
-import { CartDto } from "../types/cart.dto";
+import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 import IncreaseCartItemQuantityButton from "./increase-cart-item-quantity-button.comp";
 import ReduceCartItemQuantityButton from "./reduce-cart-item-quantity-button.comp";
 
 interface CartTableRowProps {
-  cart: CartDto;
+  cart: Cart;
   cartItem: CartItemDto;
+}
+
+interface Cart {
+  id: CartDtoIdentifier;
+  itemsCount: number;
 }
 
 const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
@@ -39,7 +44,7 @@ const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
         </Stack>
       </TableCell>
       <TableCell align="right">
-        <DeleteCartItemButton cart={{ itemsLength: cart.items.length, id: cart.id }} itemId={cartItem.id} />
+        <DeleteCartItemButton cart={{ itemsCount: cart.itemsCount, id: cart.id }} itemId={cartItem.id} />
       </TableCell>
     </TableRow >
   );

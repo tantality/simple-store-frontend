@@ -1,5 +1,5 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useState, ChangeEvent } from "react";
 import { CartDto } from "../types/cart.dto";
 import CartTableRow from "./cart-table-row.comp";
 
@@ -18,7 +18,7 @@ const CartTable: FC<CartTableProps> = ({ cart }) => {
     setCurrentPage(newPage);
   }
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setCurrentPage(0);
   };
@@ -39,7 +39,13 @@ const CartTable: FC<CartTableProps> = ({ cart }) => {
           {
             cart.items
               .slice(startPosToSliceFrom, startPosToSliceTo)
-              .map((cartItem) => (<CartTableRow cartItem={cartItem} cart={cart} key={cartItem.id} />))
+              .map((cartItem) => (
+                <CartTableRow
+                  key={cartItem.id}
+                  cartItem={cartItem}
+                  cart={{ id: cart.id, itemsCount: cart.items.length }}
+                />
+              ))
           }
         </TableBody>
       </Table>
