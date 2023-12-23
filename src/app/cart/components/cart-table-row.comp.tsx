@@ -1,14 +1,10 @@
 import { TableRow, TableCell, Stack } from "@mui/material";
-import PlusIconButton from "components/plus-icon-buttom.comp";
-import { useAppDispatch } from "hooks/redux.hooks";
-import { enqueueSnackbar } from "notistack";
-import { FC, MouseEvent } from "react";
+import { FC } from "react";
 import { CartItemQuantity } from "../constants";
-import { updateCartItem } from "../store/cart.actions";
 import { CartItemDto } from "../types/cart-item.dto";
 import { CartDto } from "../types/cart.dto";
-import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
+import IncreaseCartItemQuantityButton from "./increase-cart-item-quantity-button.comp";
 import ReduceCartItemQuantityButton from "./reduce-cart-item-quantity-button.comp";
 
 interface CartTableRowProps {
@@ -17,23 +13,6 @@ interface CartTableRowProps {
 }
 
 const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
-  const dispatch = useAppDispatch();
-
-  const handleIncreaseCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: CartDtoIdentifier, cartItem: CartItemDto) => {
-    const changedQuantity = cartItem.quantity + 1;
-
-    if (changedQuantity <= CartItemQuantity.Max) {
-
-      const params = { itemId: cartItem.id, cartId };
-      const body = { quantity: changedQuantity };
-      const response = await dispatch(updateCartItem({ params, body }));
-
-      if (response.meta.requestStatus === 'rejected') {
-        enqueueSnackbar('Failed to increase the quantity of the product.', { variant: 'error' });
-      }
-    }
-  }
-
   return (
     <TableRow
       key={cartItem.id}
@@ -52,9 +31,10 @@ const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
             cartItem={cartItem}
           />
           {cartItem.quantity}
-          <PlusIconButton
-            disabled={cartItem.quantity === CartItemQuantity.Max}
-            onClick={(e) => handleIncreaseCartItemQuantity(e, cart.id, cartItem)}
+          <IncreaseCartItemQuantityButton
+            isDisabled={cartItem.quantity === CartItemQuantity.Max}
+            cartId={cart.id}
+            cartItem={cartItem}
           />
         </Stack>
       </TableCell>
