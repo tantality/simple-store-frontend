@@ -16,7 +16,7 @@ interface ReduceCartItemQuantityButtonProps {
 const ReduceCartItemQuantityButton: FC<ReduceCartItemQuantityButtonProps> = ({ isDisabled, cartId, cartItem }) => {
   const dispatch = useAppDispatch();
 
-  const handleReduceCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleButtonClick = async (e: MouseEvent<HTMLButtonElement>) => {
     const changedQuantity = cartItem.quantity - 1;
 
     if (changedQuantity >= CartItemQuantity.Min) {
@@ -31,10 +31,7 @@ const ReduceCartItemQuantityButton: FC<ReduceCartItemQuantityButtonProps> = ({ i
   }
 
   return (
-    <MinusIconButton
-      disabled={isDisabled}
-      onClick={handleReduceCartItemQuantity}
-    />
+    <MinusIconButton disabled={isDisabled} onClick={handleButtonClick} />
   )
 }
 

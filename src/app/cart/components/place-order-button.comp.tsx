@@ -17,7 +17,7 @@ const PlaceOrderButton: FC<PlaceOrderButtonProps> = ({ isDisabled, setIsDisabled
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handlePlaceOrderButtonClick = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleButtonClick = async (e: MouseEvent<HTMLButtonElement>) => {
     setIsDisabled(true);
     const response = await dispatch(placeOrder({ params: { cartId } }));
 
@@ -33,7 +33,7 @@ const PlaceOrderButton: FC<PlaceOrderButtonProps> = ({ isDisabled, setIsDisabled
   }
 
   return (
-    <Button variant="contained" disabled={isDisabled} onClick={handlePlaceOrderButtonClick}>Place an order</Button>
+    <Button variant="contained" disabled={isDisabled} onClick={handleButtonClick}>Place an order</Button>
   )
 };
 

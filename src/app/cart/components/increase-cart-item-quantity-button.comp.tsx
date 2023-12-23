@@ -16,7 +16,7 @@ interface IncreaseCartItemQuantityButtonProps {
 const IncreaseCartItemQuantityButton: FC<IncreaseCartItemQuantityButtonProps> = ({ isDisabled, cartId, cartItem }) => {
   const dispatch = useAppDispatch();
 
-  const handleIncreaseCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleButtonClick = async (e: MouseEvent<HTMLButtonElement>) => {
     const changedQuantity = cartItem.quantity + 1;
 
     if (changedQuantity <= CartItemQuantity.Max) {
@@ -32,10 +32,7 @@ const IncreaseCartItemQuantityButton: FC<IncreaseCartItemQuantityButtonProps> = 
   }
 
   return (
-    <PlusIconButton
-      disabled={isDisabled}
-      onClick={handleIncreaseCartItemQuantity}
-    />
+    <PlusIconButton disabled={isDisabled} onClick={handleButtonClick} />
   )
 }
 
