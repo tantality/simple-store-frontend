@@ -8,6 +8,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 const PrivateRoute: FC<{ element: any }> = ({ element: Element }) => {
   const { isAuth } = useAppSelector(authSelector);
+  const accessToken = localStorage.getItem("access-token");
+
+  if (isAuth === null && accessToken) {
+    return <CenteredLoader />;
+  }
+
   return isAuth ? (
     <Suspense fallback={<CenteredLoader />}>
       <Element />

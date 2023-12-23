@@ -1,7 +1,7 @@
 import { BaseState } from "types/base-state.type";
 
 export interface AuthState extends BaseState {
-  isAuth: boolean;
+  isAuth: boolean | null;
   isPending: {
     isAuth: boolean;
   };
