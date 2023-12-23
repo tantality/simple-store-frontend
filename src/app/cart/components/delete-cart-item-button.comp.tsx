@@ -3,9 +3,10 @@ import { useAppDispatch } from "hooks/redux.hooks";
 import { useSnackbar } from "notistack";
 import { FC } from "react";
 import { deleteCart, deleteCartItem } from "../store/cart.actions";
+import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 
 interface DeleteCartItemButtonProps {
-  cart: { id: string, itemsLength: number }
+  cart: { id: CartDtoIdentifier, itemsLength: number }
   itemId: string;
 }
 
@@ -35,11 +36,7 @@ const DeleteCartItemButton: FC<DeleteCartItemButtonProps> = ({ cart, itemId }) =
   }
 
   return (
-    <Button
-      onClick={handleButtonClick}
-      variant="outlined"
-      sx={{ borderColor: 'black', color: 'black' }}
-    >
+    <Button onClick={handleButtonClick} variant="outlined" sx={{ borderColor: 'black', color: 'black' }}>
       Delete
     </Button>
   )

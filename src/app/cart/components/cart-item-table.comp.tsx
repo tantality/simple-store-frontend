@@ -8,6 +8,7 @@ import { CartItemQuantity } from "../constants";
 import { updateCartItem } from "../store/cart.actions";
 import { CartItemDto } from "../types/cart-item.dto";
 import { CartDto } from "../types/cart.dto";
+import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 
 interface CartItemTableProps {
@@ -25,7 +26,7 @@ const CartItemTable: FC<CartItemTableProps> = ({ cart }) => {
   const tableBodyCellStyles = { fontSize: '16px', fontWeight: 500 };
   const tableHeadCellStyles = { fontSize: '15px' };
 
-  const handleReduceCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => {
+  const handleReduceCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: CartDtoIdentifier, cartItem: CartItemDto) => {
     const changedQuantity = cartItem.quantity - 1;
 
     if (changedQuantity >= CartItemQuantity.Min) {
@@ -39,7 +40,7 @@ const CartItemTable: FC<CartItemTableProps> = ({ cart }) => {
     }
   }
 
-  const handleIncreaseCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: string, cartItem: CartItemDto) => {
+  const handleIncreaseCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: CartDtoIdentifier, cartItem: CartItemDto) => {
     const changedQuantity = cartItem.quantity + 1;
 
     if (changedQuantity <= CartItemQuantity.Max) {

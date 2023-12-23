@@ -6,6 +6,7 @@ import { FC, MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCart, placeOrder } from "../store/cart.actions";
 import { cartSelector } from "../store/cart.selectors";
+import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import CartError from "./cart-error.comp";
 import CartItemTable from "./cart-item-table.comp";
 import EmptyCart from "./empty-cart.comp";
@@ -31,7 +32,7 @@ const CartContent: FC = () => {
     return <EmptyCart />
   }
 
-  const handlePlaceOrderButtonClick = async (e: MouseEvent<HTMLButtonElement>, cartId: string) => {
+  const handlePlaceOrderButtonClick = async (e: MouseEvent<HTMLButtonElement>, cartId: CartDtoIdentifier) => {
     setIsPlaceOrderBtnDisabled(true);
     const response = await dispatch(placeOrder({ params: { cartId } }));
 
