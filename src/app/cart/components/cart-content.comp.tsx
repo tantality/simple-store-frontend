@@ -1,23 +1,16 @@
 import { Stack, Typography } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
-import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
-import { useSnackbar } from "notistack";
-import { FC, MouseEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getCart, placeOrder } from "../store/cart.actions";
+import { useAppSelector } from "hooks/redux.hooks";
+import { FC, useState } from "react";
 import { cartSelector } from "../store/cart.selectors";
-import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import CartError from "./cart-error.comp";
 import CartTable from "./cart-table.comp";
 import EmptyCart from "./empty-cart.comp";
 import PlaceOrderButton from "./place-order-button.comp";
 
 const CartContent: FC = () => {
-  const dispatch = useAppDispatch();
   const { cart, isPending, errors } = useAppSelector(cartSelector);
   const [isPlaceOrderBtnDisabled, setIsPlaceOrderBtnDisabled] = useState<boolean>(false);
-  const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
 
   if (errors.cart && !cart) {
     return <CartError />
@@ -32,27 +25,12 @@ const CartContent: FC = () => {
     return <EmptyCart />
   }
 
-  const handlePlaceOrderButtonClick = async (e: MouseEvent<HTMLButtonElement>, cartId: CartDtoIdentifier) => {
-    setIsPlaceOrderBtnDisabled(true);
-    const response = await dispatch(placeOrder({ params: { cartId } }));
-
-    if (response.meta.requestStatus === 'rejected') {
-      setIsPlaceOrderBtnDisabled(false);
-      enqueueSnackbar('Failed to place the order.', { variant: 'error' });
-    }
-    else {
-      enqueueSnackbar('The order is successfully placed.', { variant: 'success' });
-      dispatch(getCart());
-      navigate('/products/');
-    }
-  }
-
   return (
     <Stack rowGap="50px">
       <CartTable cart={cart} />
       <Stack flexDirection="row" columnGap="40px" alignItems="center" justifyContent="flex-end">
         <Typography fontSize="1.3rem" fontWeight={600}>{`Total price: $${cart.totalPrice}`}</Typography>
-        <PlaceOrderButton isDisabled={isPlaceOrderBtnDisabled} onClick={(e) => handlePlaceOrderButtonClick(e, cart.id)} />
+        <PlaceOrderButton isDisabled={isPlaceOrderBtnDisabled} cartId={cart.id} setIsDisabled={setIsPlaceOrderBtnDisabled} />
       </Stack>
     </Stack >
   )
