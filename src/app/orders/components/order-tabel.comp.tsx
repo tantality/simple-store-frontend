@@ -1,6 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import CenteredLoader from "components/centered-loader.comp";
-import TableRowsLoader from "components/table-rows-loader.comp";
+import TableRowLoader from "components/table-row-loader.comp";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { getUserOrders } from "../store/orders.actions";
@@ -61,7 +61,7 @@ const OrderTabel = () => {
         <TableBody>
           {
             isPending.orders && count ?
-              <TableRowsLoader rowsCount={rowsPerPage} cellsCount={5} />
+              <TableRowLoader rowCount={rowsPerPage} columnCount={5} />
               :
               orders.map((order) => (
                 <OrderTableBodyRows key={order.id} order={order} />
