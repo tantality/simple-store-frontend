@@ -1,11 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Stack, Typography, TextField, Button } from "@mui/material";
+import { Stack, Typography, TextField } from "@mui/material";
 import { useAppDispatch } from "hooks/redux.hooks";
 import { useSnackbar } from "notistack";
 import { useForm, SubmitHandler, FieldValues, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../store/auth.actions";
 import { checkPasswordAndEmailSchema } from "../validation-schemas/check-password-and-email.schema";
+import SignUpButton from "./sign-up-button.comp";
 
 const SignUpForm = () => {
   const { control, getValues, handleSubmit, formState: { errors } } = useForm({
@@ -49,10 +50,10 @@ const SignUpForm = () => {
             />
           </Stack>
         </div>
-        <Button fullWidth={true} variant="contained" type="submit" onSubmit={handleFormSubmit}>Create an account</Button>
+        <SignUpButton onButtonClick={handleFormSubmit} />
       </Stack>
       <input type="text" autoComplete="on" value="" style={{ display: 'none', opacity: 0, position: 'absolute', left: '-100000px' }} readOnly={true} />
-    </form>
+    </form >
   );
 }
 
