@@ -1,5 +1,4 @@
 import { TableRow, TableCell, Stack } from "@mui/material";
-import MinusIconButton from "components/minus-icon-button.comp";
 import PlusIconButton from "components/plus-icon-buttom.comp";
 import { useAppDispatch } from "hooks/redux.hooks";
 import { enqueueSnackbar } from "notistack";
@@ -10,6 +9,7 @@ import { CartItemDto } from "../types/cart-item.dto";
 import { CartDto } from "../types/cart.dto";
 import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
+import ReduceCartItemQuantityButton from "./reduce-cart-item-quantity-button.comp";
 
 interface CartTableRowProps {
   cart: CartDto;
@@ -18,20 +18,6 @@ interface CartTableRowProps {
 
 const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
   const dispatch = useAppDispatch();
-
-  const handleReduceCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: CartDtoIdentifier, cartItem: CartItemDto) => {
-    const changedQuantity = cartItem.quantity - 1;
-
-    if (changedQuantity >= CartItemQuantity.Min) {
-      const params = { itemId: cartItem.id, cartId };
-      const body = { quantity: changedQuantity };
-      const response = await dispatch(updateCartItem({ params, body }));
-
-      if (response.meta.requestStatus === 'rejected') {
-        enqueueSnackbar('Failed to increase the quantity of the product.', { variant: 'error' });
-      }
-    }
-  }
 
   const handleIncreaseCartItemQuantity = async (e: MouseEvent<HTMLButtonElement>, cartId: CartDtoIdentifier, cartItem: CartItemDto) => {
     const changedQuantity = cartItem.quantity + 1;
@@ -60,9 +46,10 @@ const CartTableRow: FC<CartTableRowProps> = ({ cartItem, cart }) => {
       <TableCell align="right" >${cartItem.price}</TableCell>
       <TableCell align="right">
         <Stack flexDirection={'row'} columnGap="15px" justifyContent="flex-end" alignItems="center">
-          <MinusIconButton
-            disabled={cartItem.quantity === CartItemQuantity.Min}
-            onClick={(e) => handleReduceCartItemQuantity(e, cart.id, cartItem)}
+          <ReduceCartItemQuantityButton
+            isDisabled={cartItem.quantity === CartItemQuantity.Min}
+            cartId={cart.id}
+            cartItem={cartItem}
           />
           {cartItem.quantity}
           <PlusIconButton
