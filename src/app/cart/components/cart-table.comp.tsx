@@ -11,11 +11,11 @@ import { CartDto } from "../types/cart.dto";
 import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import DeleteCartItemButton from "./delete-cart-item-button.comp";
 
-interface CartItemTableProps {
+interface CartTableProps {
   cart: CartDto;
 }
 
-const CartItemTable: FC<CartItemTableProps> = ({ cart }) => {
+const CartTable: FC<CartTableProps> = ({ cart }) => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const dispatch = useAppDispatch();
@@ -125,4 +125,4 @@ const CartItemTable: FC<CartItemTableProps> = ({ cart }) => {
   )
 };
 
-export default CartItemTable;
+export default CartTable;

@@ -8,7 +8,7 @@ import { getCart, placeOrder } from "../store/cart.actions";
 import { cartSelector } from "../store/cart.selectors";
 import { CartDtoIdentifier } from "../types/dto-identifiers.type";
 import CartError from "./cart-error.comp";
-import CartItemTable from "./cart-item-table.comp";
+import CartTable from "./cart-table.comp";
 import EmptyCart from "./empty-cart.comp";
 import PlaceOrderButton from "./place-order-button.comp";
 
@@ -49,7 +49,7 @@ const CartContent: FC = () => {
 
   return (
     <Stack rowGap="50px">
-      <CartItemTable cart={cart} />
+      <CartTable cart={cart} />
       <Stack flexDirection="row" columnGap="40px" alignItems="center" justifyContent="flex-end">
         <Typography fontSize="1.3rem" fontWeight={600}>{`Total price: $${cart.totalPrice}`}</Typography>
         <PlaceOrderButton isDisabled={isPlaceOrderBtnDisabled} onClick={(e) => handlePlaceOrderButtonClick(e, cart.id)} />
