@@ -18,7 +18,7 @@ export const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Get cart
+      // Get a cart
       .addCase(getCart.pending, (state) => {
         state.isPending.cart = true;
         state.errors.cart = null;

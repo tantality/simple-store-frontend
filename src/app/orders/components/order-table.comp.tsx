@@ -9,20 +9,15 @@ import NoOrders from "./no-orders.comp";
 import OrderListError from "./order-list-error.comp";
 import OrderTableBodyRows from "./order-table-body-rows.comp";
 
-const OrderTabel = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+const OrderTable = () => {
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const dispatch = useAppDispatch();
   const { orders, count, isPending, errors } = useAppSelector(ordersSelector);
 
   useEffect(() => {
-    dispatch(getUserOrders({
-      query: {
-        excludeCart: true,
-        pageSize: rowsPerPage,
-        pageNumber: currentPage
-      }
-    }))
+    const query = { excludeCart: true, pageSize: rowsPerPage, pageNumber: currentPage + 1 };
+    dispatch(getUserOrders({ query }))
   }, [currentPage, dispatch, rowsPerPage])
 
   if (errors.orders) {
@@ -38,12 +33,12 @@ const OrderTabel = () => {
   }
 
   const handleCurrentPageChange = (e: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setCurrentPage(newPage + 1);
+    setCurrentPage(newPage);
   }
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
-    setCurrentPage(1);
+    setCurrentPage(0);
   };
 
   return (
@@ -63,9 +58,7 @@ const OrderTabel = () => {
             isPending.orders && count ?
               <TableRowLoader rowCount={rowsPerPage} columnCount={5} />
               :
-              orders.map((order) => (
-                <OrderTableBodyRows key={order.id} order={order} />
-              ))
+              orders.map((order) => <OrderTableBodyRows key={order.id} order={order} />)
           }
         </TableBody>
       </Table>
@@ -75,7 +68,7 @@ const OrderTabel = () => {
         component="div"
         count={Number(count)}
         rowsPerPage={rowsPerPage}
-        page={currentPage - 1}
+        page={currentPage}
         onPageChange={handleCurrentPageChange}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
@@ -83,4 +76,4 @@ const OrderTabel = () => {
   );
 }
 
-export default OrderTabel;
+export default OrderTable;

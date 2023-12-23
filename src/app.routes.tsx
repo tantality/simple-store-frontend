@@ -2,13 +2,14 @@ import { refreshTokens } from "app/auth/store/auth.actions";
 import { authSelector } from "app/auth/store/auth.selectors";
 import { getCart } from "app/cart/store/cart.actions";
 import CenteredLoader from "components/centered-loader.comp";
+import { LocalStorageKey } from "enums/local-storage-key.enum";
 import { useAppDispatch, useAppSelector } from "hooks/redux.hooks";
 import React, { FC, Suspense, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const PrivateRoute: FC<{ element: any }> = ({ element: Element }) => {
   const { isAuth } = useAppSelector(authSelector);
-  const accessToken = localStorage.getItem("access-token");
+  const accessToken = localStorage.getItem(LocalStorageKey.AccessToken);
 
   if (isAuth === null && accessToken) {
     return <CenteredLoader />;
@@ -38,7 +39,7 @@ const AppRoutes = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem("access-token")) {
+    if (localStorage.getItem(LocalStorageKey.AccessToken)) {
       dispatch(refreshTokens())
       dispatch(getCart())
     }

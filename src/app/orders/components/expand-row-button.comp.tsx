@@ -9,12 +9,12 @@ interface ExpandRowButtonProps {
 }
 
 const ExpandRowButton: FC<ExpandRowButtonProps> = ({ isRowOpened, setIsRowOpened }) => {
-  const handleExpandRowButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     setIsRowOpened(!isRowOpened)
   }
 
   return (
-    <IconButton aria-label="expand row" size="small" onClick={handleExpandRowButtonClick}>
+    <IconButton aria-label="expand row" size="small" onClick={handleButtonClick}>
       {isRowOpened ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
     </IconButton>
   )

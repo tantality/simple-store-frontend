@@ -22,12 +22,8 @@ const ProductList: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllProducts({
-      query: {
-        pageNumber: currentPage,
-        pageSize: PAGE_SIZE,
-      }
-    }))
+    const query = { pageNumber: currentPage, pageSize: PAGE_SIZE };
+    dispatch(getAllProducts({ query }));
   }, [dispatch, currentPage])
 
   if (errors.products) {

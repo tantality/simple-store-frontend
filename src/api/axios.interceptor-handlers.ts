@@ -1,11 +1,12 @@
 import { AuthDto } from "app/auth/types/auth.dto";
 import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { LocalStorageKey } from "enums/local-storage-key.enum";
 import { axiosAuthClient } from "./axios.client";
 
 export const onFulfilledRequest = (
   config: InternalAxiosRequestConfig<any>
 ): InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>> => {
-  const accessToken = localStorage.getItem("access-token");
+  const accessToken = localStorage.getItem(LocalStorageKey.AccessToken);
   config.headers["Authorization"] = `Bearer ${accessToken}`;
 
   return config;
@@ -30,7 +31,7 @@ export const onRejectedResponse = async (error: any) => {
       try {
         const { data } = await axiosAuthClient.post<any, AxiosResponse<AuthDto>>("/auth/refresh-tokens");
 
-        localStorage.setItem("access-token", data.accessToken);
+        localStorage.setItem(LocalStorageKey.AccessToken, data.accessToken);
 
         error.config.headers["Authorization"] = `Bearer ${data.accessToken}`;
 
@@ -45,7 +46,7 @@ export const onRejectedResponse = async (error: any) => {
 
         return axiosAuthClient(originalRequest);
       } catch (refreshError) {
-        localStorage.removeItem("access-token");
+        localStorage.removeItem(LocalStorageKey.AccessToken);
         throw refreshError;
       } finally {
         isRefreshing = false;
