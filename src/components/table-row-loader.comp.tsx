@@ -10,9 +10,9 @@ const TableRowLoader: FC<TableRowLoaderProps> = ({ rowCount, columnCount }) => {
   const tableColumns = (
     <>
       {
-        [...Array(columnCount)].map(() => {
+        [...Array(columnCount)].map((value, index) => {
           return (
-            <TableCell>
+            <TableCell key={index}>
               <Skeleton animation="wave" variant="text" />
             </TableCell>
           )
@@ -25,7 +25,7 @@ const TableRowLoader: FC<TableRowLoaderProps> = ({ rowCount, columnCount }) => {
   return (
     <>
       {
-        [...Array(rowCount)].map((row, index) => (
+        [...Array(rowCount)].map((value, index) => (
           <TableRow key={index}>
             {tableColumns}
           </TableRow>
