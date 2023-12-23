@@ -3,7 +3,7 @@ import { AuthState } from "../types/auth.state";
 import { refreshTokens, signIn, signOut, signUp } from "./auth.actions";
 
 const initialState: AuthState = {
-  isAuth: false,
+  isAuth: null,
   isPending: {
     isAuth: false,
   },
