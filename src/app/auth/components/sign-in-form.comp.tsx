@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Stack, Typography, TextField, Button } from "@mui/material";
+import { Stack, Typography, TextField } from "@mui/material";
 import { getCart } from "app/cart/store/cart.actions";
 import { useAppDispatch } from "hooks/redux.hooks";
 import { useSnackbar } from "notistack";
@@ -7,6 +7,7 @@ import { Controller, FieldValues, SubmitHandler, useForm } from "react-hook-form
 import { useNavigate } from "react-router";
 import { signIn } from "../store/auth.actions";
 import { checkPasswordAndEmailSchema } from "../validation-schemas/check-password-and-email.schema";
+import SignInButton from "./sign-in-button.comp";
 
 const SignInForm = () => {
   const { control, getValues, handleSubmit, formState: { errors } } = useForm({
@@ -41,17 +42,17 @@ const SignInForm = () => {
               name="email"
               control={control}
               render={({ field }) => (
-                <TextField fullWidth={true} required id="email" label="Email address" variant="outlined" autoComplete="none" {...field} helperText={errors.email ? `${errors.email.message}` : ''} error={errors.email ? true : false} />)}
+                <TextField fullWidth={true} required id="email" label="Email address" variant="outlined" autoComplete="none" {...field} helperText={errors.email ? `${errors.email.message}` : ''} error={Boolean(errors.email)} />)}
             />
             <Controller
               name="password"
               control={control}
               render={({ field }) => (
-                <TextField fullWidth={true} required id="password" label="Password" variant="outlined" type="password" {...field} helperText={errors.password ? `${errors.password.message}` : ''} error={errors.password ? true : false} />)}
+                <TextField fullWidth={true} required id="password" label="Password" variant="outlined" type="password" {...field} helperText={errors.password ? `${errors.password.message}` : ''} error={Boolean(errors.password)} />)}
             />
           </Stack>
         </div>
-        <Button fullWidth={true} variant="contained" type="submit" onSubmit={handleFormSubmit}>Sign in</Button>
+        <SignInButton onButtonClick={handleFormSubmit} />
       </Stack>
       <input type="text" autoComplete="on" value="" style={{ display: 'none', opacity: 0, position: 'absolute', left: '-100000px' }} readOnly={true} />
     </form>
