@@ -1,5 +1,5 @@
-export interface GetAllProductsQueryDto {
+import { PaginationQueryDto } from "types/pagination-query.dto";
+
+export interface GetAllProductsQueryDto extends PaginationQueryDto {
   q: string;
-  pageSize: number;
-  pageNumber: number;
 }

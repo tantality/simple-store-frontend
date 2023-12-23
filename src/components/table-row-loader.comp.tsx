@@ -1,16 +1,16 @@
 import { TableRow, TableCell, Skeleton } from "@mui/material";
 import { FC } from "react";
 
-interface TableRowsLoaderProps {
-  rowsCount: number;
-  cellsCount: number
+interface TableRowLoaderProps {
+  rowCount: number;
+  columnCount: number
 }
 
-const TableRowsLoader: FC<TableRowsLoaderProps> = ({ rowsCount, cellsCount }) => {
-  const tableCells = (
+const TableRowLoader: FC<TableRowLoaderProps> = ({ rowCount, columnCount }) => {
+  const tableColumns = (
     <>
       {
-        [...Array(cellsCount)].map(() => {
+        [...Array(columnCount)].map(() => {
           return (
             <TableCell>
               <Skeleton animation="wave" variant="text" />
@@ -25,9 +25,9 @@ const TableRowsLoader: FC<TableRowsLoaderProps> = ({ rowsCount, cellsCount }) =>
   return (
     <>
       {
-        [...Array(rowsCount)].map((row, index) => (
+        [...Array(rowCount)].map((row, index) => (
           <TableRow key={index}>
-            {tableCells}
+            {tableColumns}
           </TableRow>
         ))
       }
@@ -36,4 +36,4 @@ const TableRowsLoader: FC<TableRowsLoaderProps> = ({ rowsCount, cellsCount }) =>
 
 };
 
-export default TableRowsLoader;
+export default TableRowLoader;

@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosAuthClient } from "api/axios.client";
 import { GetUserOrdersQueryDto } from "../types/get-user-orders-query.dto";
-import { OrderDto } from "../types/order.dto";
+import { OrdersDto } from "../types/orders.dto";
 
-export const getUserOrders = createAsyncThunk<OrderDto[], { query: GetUserOrdersQueryDto }>(
+export const getUserOrders = createAsyncThunk<OrdersDto, { query: GetUserOrdersQueryDto }>(
   "GET/user-orders",
   async ({ query = {} }, { rejectWithValue }) => {
     try {
